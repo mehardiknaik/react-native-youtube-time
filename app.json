@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "react-native-youtube-time",
+    "name": "Receipes",
     "slug": "react-native-youtube-time",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -21,10 +21,16 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.hardiknaik.reactnativeyoutubetime"
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "2d216283-5e68-4e79-a720-111e9c5c02cc"
+      }
     }
   }
 }

@@ -2,30 +2,26 @@ import React, { useRef, useState } from "react";
 import { StatusBar } from "expo-status-bar";
 import {
   View,
-  TextInput,
-  Image,
   StyleSheet,
   ScrollView,
   Animated,
-  Text,
-  FlatList,
   TouchableOpacity,
   useWindowDimensions,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import vegetables from "../assets/vegetables.jpg";
-import { LinearGradient } from "expo-linear-gradient";
 import Icon from "react-native-vector-icons/AntDesign";
-import { Card } from "react-native-paper";
+import { useNavigation, useRoute } from "@react-navigation/native";
 
 const Offset = 400;
 
 const IconAnimated = Animated.createAnimatedComponent(Icon);
 
-export default function Header() {
+export default function Header({ title, children }) {
   const animatedValue = useRef(new Animated.Value(0)).current;
   const scrollViewRef = useRef(null);
   const { width } = useWindowDimensions();
+  const { name } = useRoute();
+  const navigation = useNavigation();
 
   const headerBg = {
     backgroundColor: animatedValue.interpolate({
@@ -55,12 +51,15 @@ export default function Header() {
       <StatusBar animated style={"dark"} />
       <Animated.View style={[styles.header, headerBg]}>
         <SafeAreaView style={{ flexDirection: "row", gap: 5 }}>
-          <TouchableOpacity style={{ marginTop: 8 }}>
+          {name !=="Home"&&<TouchableOpacity
+            style={{ marginTop: 8 }}
+            onPress={() => navigation.goBack()}
+          >
             <IconAnimated name="arrowleft" size={26} style={titleColor} />
-          </TouchableOpacity>
+          </TouchableOpacity>}
 
           <Animated.Text style={[styles.title, titleFont, titleColor]}>
-            Hardik
+            {title}
           </Animated.Text>
         </SafeAreaView>
       </Animated.View>
@@ -73,37 +72,7 @@ export default function Header() {
         }}
         scrollEventThrottle={16}
       >
-        {/* <LinearGradient
-          start={{ x: 0.0, y: 0.25 }}
-          end={{ x: 0.5, y: 1.0 }}
-          colors={["#448AFF", "#9E9E9E", "#FFEB3B", "#FF5722"]}
-          style={styles.cover}
-        /> */}
-        <Image style={styles.cover} source={vegetables} />
-        <View>
-          <FlatList
-            numColumns={2}
-            data={Array(51)
-              .fill(3)
-              .map((e, i) => i)}
-            keyExtractor={(item) => item}
-            renderItem={({ item }) => (
-              <TouchableOpacity
-                style={{ flex: 1, margin: 10 }}
-                onPress={() => {}}
-              >
-                <Card mode={"contained"}>
-                  <Card.Title title="Card Title" />
-                  <Card.Content>
-                    <Text variant="titleLarge">{item}</Text>
-                    <Text variant="bodyMedium">Card content</Text>
-                  </Card.Content>
-                </Card>
-              </TouchableOpacity>
-            )}
-            scrollEnabled={false}
-          />
-        </View>
+        {children}
       </ScrollView>
     </View>
   );
@@ -123,10 +92,4 @@ const styles = StyleSheet.create({
     paddingBottom: 5,
   },
   title: {},
-  cover: {
-    width: "100%",
-    height: "auto",
-    aspectRatio: 1,
-    borderBottomRightRadius: 50,
-  },
 });
