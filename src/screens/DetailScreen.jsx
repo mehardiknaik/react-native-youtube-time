@@ -1,6 +1,7 @@
 import { ImageBackground, Image, StyleSheet, Text, View } from "react-native";
 import React from "react";
 import Header from "../component/Header";
+import { Card, Surface } from "react-native-paper";
 
 const DetailScreen = ({ route: { params } }) => {
   return (
@@ -14,11 +15,10 @@ const DetailScreen = ({ route: { params } }) => {
             alignItems: "flex-end",
             justifyContent: "flex-end",
             height: "100%",
-            
-              shadowColor: '#000',
-              shadowOffset: {width: 0, height: 0},
-              shadowRadius: 1,
-            
+
+            shadowColor: "#000",
+            shadowOffset: { width: 0, height: 0 },
+            shadowRadius: 1,
           }}
         >
           <Image
@@ -33,7 +33,9 @@ const DetailScreen = ({ route: { params } }) => {
           />
         </View>
       </ImageBackground>
-      <Text>DetailScreen</Text>
+      <View style={{ marginHorizontal: 10 }}>
+        <Text>Details Screen</Text>
+      </View>
     </Header>
   );
 };

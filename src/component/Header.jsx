@@ -7,6 +7,7 @@ import {
   Animated,
   TouchableOpacity,
   useWindowDimensions,
+  Image,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Icon from "react-native-vector-icons/AntDesign";
@@ -51,12 +52,19 @@ export default function Header({ title, children }) {
       <StatusBar animated style={"dark"} />
       <Animated.View style={[styles.header, headerBg]}>
         <SafeAreaView style={{ flexDirection: "row", gap: 5 }}>
-          {name !=="Home"&&<TouchableOpacity
-            style={{ marginTop: 8 }}
-            onPress={() => navigation.goBack()}
-          >
-            <IconAnimated name="arrowleft" size={26} style={titleColor} />
-          </TouchableOpacity>}
+          {name == "Home" ? (
+            <Image
+              style={{ height: 45,aspectRatio:1,width:'auto' }}
+              source={require("../../assets/icon.png")}
+            />
+          ) : (
+            <TouchableOpacity
+              style={{ marginTop: 8 }}
+              onPress={() => navigation.goBack()}
+            >
+              <IconAnimated name="arrowleft" size={26} style={titleColor} />
+            </TouchableOpacity>
+          )}
 
           <Animated.Text style={[styles.title, titleFont, titleColor]}>
             {title}
