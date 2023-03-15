@@ -55,6 +55,33 @@ export default function Header({ title, children }) {
     }),
   };
 
+  const featureNameAnimation = {
+    transform: [
+      {
+        translateY: animatedValue.interpolate({
+          inputRange: [0, Offset],
+          outputRange: [380, 4],
+          extrapolate: "clamp",
+          useNativeDriver: true,
+        }),
+      },
+      {
+        translateX: animatedValue.interpolate({
+          inputRange: [350, Offset],
+          outputRange: [-35, 0],
+          extrapolate: "clamp",
+          useNativeDriver: true,
+        }),
+      },
+    ],
+    color: animatedValue.interpolate({
+      inputRange: [350, Offset],
+      outputRange: ["#FFF", "#000"],
+      extrapolate: "clamp",
+      useNativeDriver: true,
+    }),
+  };
+
   return (
     <View
       style={{ ...styles.container, backgroundColor: theme.colors.background }}
@@ -76,9 +103,20 @@ export default function Header({ title, children }) {
             </TouchableOpacity>
           )}
 
-          <Animated.Text style={[styles.title, titleFont, titleColor]}>
-            {title}
-          </Animated.Text>
+          {name == "Home" ? (
+            <Animated.Text style={[styles.title, titleFont, titleColor]}>
+              {title}
+            </Animated.Text>
+          ) : (
+            <Animated.Text
+              style={[
+                styles.title,
+                featureNameAnimation
+              ]}
+            >
+              {title}
+            </Animated.Text>
+          )}
         </SafeAreaView>
       </Animated.View>
       <ScrollView
@@ -109,6 +147,9 @@ const styles = StyleSheet.create({
     overflow: "visible",
     paddingHorizontal: 12,
     paddingBottom: 5,
+    minHeight:80
   },
-  title: {},
+  title: {
+    fontSize:30
+  },
 });
