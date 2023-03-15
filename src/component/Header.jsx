@@ -12,6 +12,7 @@ import {
 import { SafeAreaView } from "react-native-safe-area-context";
 import Icon from "react-native-vector-icons/AntDesign";
 import { useNavigation, useRoute } from "@react-navigation/native";
+import { useTheme } from "react-native-paper";
 
 const Offset = 400;
 
@@ -24,11 +25,16 @@ export default function Header({ title, children }) {
   const { name } = useRoute();
   const navigation = useNavigation();
 
+  const theme = useTheme();
+
+  console.log(theme);
+
   const headerBg = {
     backgroundColor: animatedValue.interpolate({
       inputRange: [0, Offset],
       outputRange: ["#fff0", "#ffff"],
       extrapolate: "clamp",
+      useNativeDriver: true,
     }),
   };
 
@@ -37,6 +43,7 @@ export default function Header({ title, children }) {
       inputRange: [0, Offset],
       outputRange: [70, 35],
       extrapolate: "clamp",
+      useNativeDriver: true,
     }),
   };
   const titleColor = {
@@ -44,17 +51,20 @@ export default function Header({ title, children }) {
       inputRange: [0, Offset],
       outputRange: ["#FFF", "#000"],
       extrapolate: "clamp",
+      useNativeDriver: true,
     }),
   };
 
   return (
-    <View style={styles.container}>
+    <View
+      style={{ ...styles.container, backgroundColor: theme.colors.background }}
+    >
       <StatusBar animated style={"dark"} />
       <Animated.View style={[styles.header, headerBg]}>
         <SafeAreaView style={{ flexDirection: "row", gap: 5 }}>
           {name == "Home" ? (
             <Image
-              style={{ height: 45,aspectRatio:1,width:'auto' }}
+              style={{ height: 45, aspectRatio: 1, width: "auto" }}
               source={require("../../assets/icon.png")}
             />
           ) : (
@@ -89,6 +99,7 @@ export default function Header({ title, children }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: "red",
   },
   header: {
     position: "absolute",

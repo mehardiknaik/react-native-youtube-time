@@ -2,6 +2,7 @@ import { ImageBackground, Image, StyleSheet, Text, View } from "react-native";
 import React from "react";
 import Header from "../component/Header";
 import { Card, Surface } from "react-native-paper";
+import { FlatList } from "react-native";
 
 const DetailScreen = ({ route: { params } }) => {
   return (
@@ -36,6 +37,19 @@ const DetailScreen = ({ route: { params } }) => {
       <View style={{ marginHorizontal: 10 }}>
         <Text>Details Screen</Text>
       </View>
+      <FlatList
+        data={[
+          1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20,
+        ]}
+        keyExtractor={(item) => item}
+        renderItem={({ item }) => (
+          <View style={{ marginVertical: 10 }}>
+            <Text>{item}</Text>
+          </View>
+        )}
+        hea
+        scrollEnabled={false}
+      />
     </Header>
   );
 };

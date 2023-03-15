@@ -2,13 +2,12 @@ import {
   FlatList,
   Image,
   StyleSheet,
-  Text,
   TouchableOpacity,
   View,
 } from "react-native";
 import React from "react";
 import Header from "../component/Header";
-import { Card } from "react-native-paper";
+import { Card, Text } from "react-native-paper";
 import data from "../data/data";
 import { useNavigation } from "@react-navigation/native";
 
@@ -34,10 +33,7 @@ const HomeScreen = () => {
             >
               <Card mode={"contained"}>
                 <Card.Title title={item.title} />
-                <Image
-                  source={item.uri}
-                  style={styles.itemImage}
-                />
+                <Image source={item.uri} style={styles.itemImage} />
                 <Card.Content>
                   <Text>Price: {item.Price}</Text>
                 </Card.Content>
@@ -60,7 +56,7 @@ const styles = StyleSheet.create({
     aspectRatio: 1,
     borderBottomRightRadius: 50,
   },
-  itemImage:[
+  itemImage: [
     {
       width: "50%",
       height: "auto",
@@ -68,6 +64,6 @@ const styles = StyleSheet.create({
       position: "absolute",
       top: -20,
       right: 0,
-    }
-  ]
+    },
+  ],
 });
