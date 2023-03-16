@@ -1,5 +1,5 @@
 import React, { useRef, useState } from "react";
-import { StatusBar } from "expo-status-bar";
+// import { StatusBar } from "expo-status-bar";
 import {
   View,
   StyleSheet,
@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
   useWindowDimensions,
   Image,
+  StatusBar,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Icon from "react-native-vector-icons/AntDesign";
@@ -86,7 +87,12 @@ export default function Header({ title, children }) {
     <View
       style={{ ...styles.container, backgroundColor: theme.colors.background }}
     >
-      <StatusBar animated style={"dark"} />
+      <StatusBar
+        backgroundColor="transparent"
+        translucent={true}
+        barStyle={"light-content"}
+        animated
+      />
       <Animated.View style={[styles.header, headerBg]}>
         <SafeAreaView style={{ flexDirection: "row", gap: 5 }}>
           {name == "Home" ? (
@@ -108,12 +114,7 @@ export default function Header({ title, children }) {
               {title}
             </Animated.Text>
           ) : (
-            <Animated.Text
-              style={[
-                styles.title,
-                featureNameAnimation
-              ]}
-            >
+            <Animated.Text style={[styles.title, featureNameAnimation]}>
               {title}
             </Animated.Text>
           )}
@@ -125,6 +126,11 @@ export default function Header({ title, children }) {
         onScroll={(e) => {
           const offsetY = e.nativeEvent.contentOffset.y;
           animatedValue.setValue(offsetY);
+          if (offsetY < Offset/2) {
+            StatusBar.setBarStyle("light-content");
+          } else {
+            StatusBar.setBarStyle("dark-content");
+          }
         }}
         scrollEventThrottle={16}
       >
@@ -147,9 +153,9 @@ const styles = StyleSheet.create({
     overflow: "visible",
     paddingHorizontal: 12,
     paddingBottom: 5,
-    minHeight:80
+    minHeight: 80,
   },
   title: {
-    fontSize:30
+    fontSize: 30,
   },
 });
