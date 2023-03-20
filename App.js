@@ -1,29 +1,20 @@
 import { StyleSheet, Text, View } from "react-native";
-import {
-  MD3LightTheme,
-  MD3DarkTheme,
-  Provider as PaperProvider,
-} from "react-native-paper";
+
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import HomeScreen from "./src/screens/HomeScreen";
 import DetailScreen from "./src/screens/DetailScreen";
+import DataProvider, { useData } from "./src/context/DataProvider";
+import ThemeProvider from "./src/context/ThemeProvider";
 
 const Stack = createNativeStackNavigator();
 
-const theme = {
-  ...MD3DarkTheme,
-  roundness: 2,
-  colors: {
-    ...MD3DarkTheme.colors,
-    primary: "#3498db",
-    accent: "#f1c40f",
-  },
-};
+
 
 export default function App() {
   return (
-    <PaperProvider theme={theme}>
+    <DataProvider>
+      <ThemeProvider>
         <NavigationContainer>
           <Stack.Navigator
             screenOptions={{
@@ -34,7 +25,8 @@ export default function App() {
             <Stack.Screen name="Detail" component={DetailScreen} />
           </Stack.Navigator>
         </NavigationContainer>
-    </PaperProvider>
+        </ThemeProvider>
+    </DataProvider>
   );
 }
 

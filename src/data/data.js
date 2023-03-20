@@ -70,7 +70,7 @@ export default data = [
     uri: require("../assets/HotDog.png"),
   },
   {
-    title: "IceCream",
+    title: "Ice Cream",
     Price: 30,
     uri: require("../assets/IceCream.png"),
   },
