@@ -37,7 +37,7 @@ export default function Header({ title, children }) {
   const headerBg = {
     backgroundColor: animatedValue.interpolate({
       inputRange: [0, Offset],
-      outputRange: ["#fff0", "#ffff"],
+      outputRange: ["transparent", theme.colors.surface],
       extrapolate: "clamp",
       useNativeDriver: true,
     }),
@@ -54,7 +54,7 @@ export default function Header({ title, children }) {
   const titleColor = {
     color: animatedValue.interpolate({
       inputRange: [0, Offset],
-      outputRange: ["#FFF", "#000"],
+      outputRange: ["#FFF", theme.colors.inverseSurface],
       extrapolate: "clamp",
       useNativeDriver: true,
     }),
@@ -79,17 +79,11 @@ export default function Header({ title, children }) {
         }),
       },
     ],
-    color: animatedValue.interpolate({
-      inputRange: [350, Offset],
-      outputRange: ["#FFF", "#000"],
-      extrapolate: "clamp",
-      useNativeDriver: true,
-    }),
   };
 
   return (
     <View
-      style={{ ...styles.container, backgroundColor: theme.colors.background }}
+      style={{ ...styles.container }}
     >
       <StatusBar
         backgroundColor="transparent"
@@ -121,7 +115,13 @@ export default function Header({ title, children }) {
               {title}
             </Animated.Text>
           ) : (
-            <Animated.Text style={[styles.title, featureNameAnimation]}>
+            <Animated.Text
+              style={[
+                styles.title,
+                featureNameAnimation,
+                { color: theme.colors.inverseSurface },
+              ]}
+            >
               {title}
             </Animated.Text>
           )}
@@ -134,10 +134,10 @@ export default function Header({ title, children }) {
         onScroll={(e) => {
           const offsetY = e.nativeEvent.contentOffset.y;
           animatedValue.setValue(offsetY);
-          if (offsetY < Offset / 2) {
-            StatusBar.setBarStyle("light-content");
-          } else {
+          if (offsetY > Offset / 2 && !theme.dark) {
             StatusBar.setBarStyle("dark-content");
+          } else {
+            StatusBar.setBarStyle("light-content");
           }
         }}
         scrollEventThrottle={16}
@@ -156,6 +156,8 @@ const MenuComp = ({ style }) => {
   const closeMenu = () => setVisible(false);
 
   const { dispatch, theme } = useData();
+
+  const { navigate } = useNavigation();
 
   const changeTheme = () => {
     dispatch({ type: "theme", payload: theme === "light" ? "dark" : "light" });
@@ -179,7 +181,12 @@ const MenuComp = ({ style }) => {
           onPress={changeTheme}
           title={theme === "light" ? "Dark Mode" : "Light Mode"}
         />
-        <Menu.Item onPress={() => {}} title="Item 2" />
+        <Menu.Item
+          onPress={() => {
+            navigate("About");
+          }}
+          title="About"
+        />
         <Divider />
         <Menu.Item onPress={() => {}} title="Item 3" />
       </Menu>
@@ -190,7 +197,6 @@ const MenuComp = ({ style }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "red",
   },
   header: {
     position: "absolute",
